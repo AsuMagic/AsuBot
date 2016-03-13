@@ -1,6 +1,6 @@
 #include "irc.h"
 
-const unsigned int bufferSize = 16;
+const unsigned int bufferSize = 4096;
 
 IRC::IRC(const od::IPAddress& addr, const uint16_t& port) : addr(addr), port(port) {}
 
