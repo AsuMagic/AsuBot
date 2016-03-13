@@ -122,7 +122,15 @@ std::string IRC::getMessage(const std::string& privmsg)
     unsigned long msgbegin = privmsg.find(':', 1);
     if (msgbegin == std::string::npos) return "[ No message ]";
 
-    return privmsg.substr(msgbegin, privmsg.size() - msgbegin);
+    return privmsg.substr(msgbegin + 1, privmsg.size() - msgbegin + 1);
+}
+
+std::string IRC::getUsername(const std::string& privmsg)
+{
+    unsigned long warnpos = privmsg.find('!');
+    if (warnpos == std::string::npos) return "personne";
+
+    return privmsg.substr(1, warnpos - 1);
 }
 
 od::Socket::Status IRC::send(std::string str)

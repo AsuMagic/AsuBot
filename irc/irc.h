@@ -29,6 +29,7 @@ public:
 
     static std::string getChannel(const std::string& privmsg);
     static std::string getMessage(const std::string& privmsg);
+    static std::string getUsername(const std::string& privmsg);
 
 private:
     od::SocketTcp sock;
