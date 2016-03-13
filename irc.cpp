@@ -36,6 +36,7 @@ std::string IRC::receiveMessage()
     {
         std::string str = messages.front();
         messages.pop();
+        printf("[<] %s\n", str.c_str());
         triggerEvents(str);
         return str;
     }

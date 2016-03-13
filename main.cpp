@@ -21,6 +21,15 @@ int main()
     irc.send("NICK AsuBot");
     irc.send("USER AsuBot AsuBot AsuBot AsuBot");
 
+    bool joinedChannels = false;
+    while (irc.isConnected() && !joinedChannels)
+    {
+        std::string str = irc.receiveMessage();
+        joinedChannels = str.find("MODE") != std::string::npos;
+    }
+
+    irc.send("JOIN #bot");
+
     while (irc.isConnected())
     {
         std::string str = irc.receiveMessage();
