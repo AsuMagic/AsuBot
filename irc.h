@@ -22,8 +22,13 @@ public:
     std::string receiveMessage();
     od::Socket::Status send(std::string str);
 
+    od::Socket::Status privmsg(const std::string& channel, const std::string& str);
+
     void triggerEvents(const std::string& message);
     void registerEventHandler(ircEventHandler handler);
+
+    static std::string getChannel(const std::string& privmsg);
+    static std::string getMessage(const std::string& privmsg);
 
 private:
     od::SocketTcp sock;

@@ -106,12 +106,36 @@ void IRC::registerEventHandler(ircEventHandler handler)
     handlers.push_back(handler);
 }
 
+std::string IRC::getChannel(const std::string& privmsg)
+{
+    unsigned long hashloc = privmsg.find('#');
+    if (hashloc == std::string::npos) return "";
+
+    unsigned long nextspaceloc = privmsg.find(' ', hashloc);
+    if (nextspaceloc == std::string::npos) return "";
+
+    return privmsg.substr(hashloc, nextspaceloc - hashloc);
+}
+
+std::string IRC::getMessage(const std::string& privmsg)
+{
+    unsigned long msgbegin = privmsg.find(':', 1);
+    if (msgbegin == std::string::npos) return "[ No message ]";
+
+    return privmsg.substr(msgbegin, privmsg.size() - msgbegin);
+}
+
 od::Socket::Status IRC::send(std::string str)
 {
     printf("[>] %s\n", str.c_str());
     str += "\r\n";
     stat = sock.send(&str[0], str.size());
     return stat;
+}
+
+od::Socket::Status IRC::privmsg(const std::string& channel, const std::string& str)
+{
+    return send("PRIVMSG " + channel + " " + str);
 }
 
 void autoPing(IRC& irc, const std::string& message)
